@@ -8,11 +8,12 @@ tree.load(path="crate_database")
 
 
 def search():
-    query = input("query: ")
+    query = input("query: ").strip().lower()
 
     for item in tree.tree:
-        if fuzz.ratio(item, query) >= 80:
-            print(tree.tree[item])
+        item_cleaned = item.strip().lower()
+        if fuzz.ratio(item_cleaned, query) >= 80 or fuzz.ratio(item_cleaned, f"the {query}") >= 80:
+            print(item, tree.tree[item])
 
 
 search()
